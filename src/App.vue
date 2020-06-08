@@ -6,18 +6,21 @@
       <router-view/>
     </div>
     -->
+    <Feed/>
     <Footer/>
   </div>
 </template>
 
 <script>
 import Toolbar from "./components/Toolbar.vue";
+import Feed from "./components/Feed.vue";
 import Footer from "./components/Footer.vue";
 
 export default {
   name: "App",
   components: {
     Toolbar,
+    Feed,
     Footer
   }
 };
