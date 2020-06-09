@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-progress :value="value" :max="max"></b-progress>
+    <b-progress height="5px" :value="value" :max="max"></b-progress>
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item href="#">

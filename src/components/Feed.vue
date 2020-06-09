@@ -1,13 +1,9 @@
 <template>
   <div class="example-3d">
-    <swiper ref="swiper" class="swiper" :options="swiperOptions">
-      <swiper-slide>Slide 1</swiper-slide>
-      <swiper-slide>Slide 2</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      <swiper-slide>Slide 4</swiper-slide>
-      <swiper-slide>Slide 5</swiper-slide>
-      <swiper-slide>Slide 6</swiper-slide>
-      <swiper-slide>Slide 7</swiper-slide>
+    <swiper ref="swiper" class="swiper" :options="swiperOptions" @click-slide="slideClicked()">
+      <swiper-slide v-for="popularArtwork in popularArtworks" :key="popularArtwork.id">
+        <b-img style="width: 300px; height: 300px;" :src="popularArtwork.webImage.url"></b-img>
+      </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
@@ -15,10 +11,9 @@
 
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
+import MuseumArtworks from "@/services/MuseumArtworks.js";
 
 export default {
-  name: "swiper-example-3d-coverflow",
-  title: "3D Coverflow effect",
   components: {
     Swiper,
     SwiperSlide
@@ -40,7 +35,8 @@ export default {
         pagination: {
           el: ".swiper-pagination"
         }
-      }
+      },
+      popularArtworks: []
     };
   },
   computed: {
@@ -48,7 +44,16 @@ export default {
       return this.$refs.swiper.$swiper;
     }
   },
+  methods: {
+    slideClicked() {
+      console.log("Click slide!", this.swiper);
+    }
+  },
   mounted() {
+    MuseumArtworks.getPopularArtworks().then(
+      res => (this.popularArtworks = res.data.artObjects)
+    );
+    console.log(this.popularArtworks);
     console.log("SWIPER: ", this.swiper);
   }
 };
