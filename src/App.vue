@@ -1,23 +1,13 @@
 <template>
   <div id="app">
-    <b-container fluid class="px-0" style="height: inherit;">
-      <b-row style="width: 100%; height: 100%;">
-        <b-col sm="12" class="px-0">
-          <Toolbar />
-        </b-col>
-        <!--
+    <Toolbar />
+    <!--
      <div id='router-view'>
       <router-view/>
     </div>
-        -->
-        <b-col sm="12" class="px-0">
-          <Feed />
-        </b-col>
-        <b-col sm="12" align-self="end" class="px-0">
-          <Footer />
-        </b-col>
-      </b-row>
-    </b-container>
+    -->
+    <Feed />
+    <Footer id="footer" />
   </div>
 </template>
 
@@ -43,6 +33,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  height: inherit;
+  min-height: 100%;
+  position: relative;
+  padding-bottom: 50px;
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
 }
 </style>
