@@ -1,11 +1,41 @@
 <template>
-  <div class="example-3d">
-    <swiper ref="swiper" class="swiper" :options="swiperOptions" @click-slide="slideClicked()">
-      <swiper-slide v-for="popularArtwork in popularArtworks" :key="popularArtwork.id">
-        <b-img style="width: 300px; height: 300px;" :src="popularArtwork.webImage.url"></b-img>
-      </swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
-    </swiper>
+  <div>
+    <div class="swiperWrapper">
+      <swiper ref="swiper" class="swiper" :options="swiperOptions" @click-slide="slideClicked()">
+        <swiper-slide v-for="popularArtwork in popularArtworks" :key="popularArtwork.id">
+          <b-img style="width: 300px; height: 300px;" :src="popularArtwork.webImage.url"></b-img>
+        </swiper-slide>
+        <div class="swiper-pagination" slot="pagination"></div>
+      </swiper>
+    </div>
+   <!--
+    <b-container class="mb-5">
+      <b-row align-h="center" style="height: 400px;">
+        <b-col sm="10">
+          <b-row align-h="center">
+            <b-col>
+              <b-carousel
+                controls
+                indicators
+                background="#ababab"
+                style="height: 400px; text-shadow: 1px 1px 2px #333;"
+              >
+                <b-carousel-slide
+                  class="p-2"
+                  v-for="popularArtwork in popularArtworks"
+                  :key="popularArtwork.id"
+                >
+                <template v-slot:img>
+                  <img class="d-block img-fluid w-100" style="width: 300px; height: 300px;" :src="popularArtwork.webImage.url"/>
+                </template>
+                </b-carousel-slide>
+              </b-carousel>
+            </b-col>
+          </b-row>
+        </b-col>
+      </b-row>
+    </b-container>
+    -->
   </div>
 </template>
 
@@ -60,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.example-3d {
+.swiperWrapper {
   width: 100%;
   height: 400px;
   padding-top: 50px;

@@ -1,6 +1,6 @@
 <template>
 <div>
-  <b-navbar fixed="bottom" type="dark" variant="dark">
+  <b-navbar type="dark" variant="dark">
        <b-navbar-brand href="#"> <span style="font-size: 15px;">&#169; Rijks Social</span></b-navbar-brand>
   </b-navbar>
 </div>
