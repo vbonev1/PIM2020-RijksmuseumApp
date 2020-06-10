@@ -1,47 +1,43 @@
 <template>
   <div>
+    <!-- Swiper holding popular artworks from the museum -->
     <div class="swiperWrapper">
-      <swiper ref="swiper" class="swiper" :options="swiperOptions" @click-slide="slideClicked()">
-        <swiper-slide v-for="popularArtwork in popularArtworks" :key="popularArtwork.id">
-          <b-img style="width: 300px; height: 300px;" :src="popularArtwork.webImage.url"></b-img>
+      <swiper ref="popularArtworksSwiper" class="swiper" :options="artworksSwiperOptions">
+        <swiper-slide v-for="artwork in artworks" :key="artwork.id">
+          <b-img style="width: 300px; height: 300px;" :src="artwork.webImage.url"></b-img>
         </swiper-slide>
-        <div class="swiper-pagination" slot="pagination"></div>
       </swiper>
     </div>
-   <!--
-    <b-container class="mb-5">
-      <b-row align-h="center" style="height: 400px;">
-        <b-col sm="10">
-          <b-row align-h="center">
-            <b-col>
-              <b-carousel
-                controls
-                indicators
-                background="#ababab"
-                style="height: 400px; text-shadow: 1px 1px 2px #333;"
-              >
-                <b-carousel-slide
-                  class="p-2"
-                  v-for="popularArtwork in popularArtworks"
-                  :key="popularArtwork.id"
-                >
-                <template v-slot:img>
-                  <img class="d-block img-fluid w-100" style="width: 300px; height: 300px;" :src="popularArtwork.webImage.url"/>
-                </template>
-                </b-carousel-slide>
-              </b-carousel>
-            </b-col>
-          </b-row>
-        </b-col>
-      </b-row>
-    </b-container>
-    -->
+
+    <div class="swiperWrapper">
+      <swiper ref="popularSetsSwiper" class="swiper" :options="setsSwiperOptions">
+        <swiper-slide v-for="content in setsContents" :key="content.id">
+          <b-carousel
+            controls
+            indicators
+            background="#ababab"
+            style="width: 500px; height: 400px; text-shadow: 1px 1px 2px #333;"
+          >
+            <b-carousel-slide class="p-2" v-for="artwork in content.items" :key="artwork.id">
+              <template v-slot:img>
+                <img
+                  class="d-block img-fluid w-100"
+                  style="width: 200px; height: 400px;"
+                  :src="artwork.image.cdnUrl"
+                />
+              </template>
+            </b-carousel-slide>
+          </b-carousel>
+        </swiper-slide>
+      </swiper>
+    </div>
   </div>
 </template>
 
 <script>
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
-import MuseumArtworks from "@/services/MuseumArtworks.js";
+import Artworks from "@/services/Artworks.js";
+import Sets from "@/services/Sets.js";
 
 export default {
   components: {
@@ -50,7 +46,7 @@ export default {
   },
   data() {
     return {
-      swiperOptions: {
+      artworksSwiperOptions: {
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
@@ -66,7 +62,33 @@ export default {
           el: ".swiper-pagination"
         }
       },
-      popularArtworks: []
+      setsSwiperOptions: {
+        slidesPerView: 4,
+        spaceBetween: 40,
+        direction: "horizontal",
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev"
+        },
+        breakpoints: {
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          },
+          768: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          640: {
+            slidesPerView: 1,
+            spaceBetween: 10
+          }
+        }
+      },
+      artworks: [],
+      sets: [],
+      setsDetails: [],
+      setsContents: []
     };
   },
   computed: {
@@ -80,11 +102,33 @@ export default {
     }
   },
   mounted() {
-    MuseumArtworks.getPopularArtworks().then(
-      res => (this.popularArtworks = res.data.artObjects)
-    );
-    console.log(this.popularArtworks);
-    console.log("SWIPER: ", this.swiper);
+    // deciding how many pages of artworks to request
+    for (let i = 0; i < 1; i++) {
+      Artworks.getArtworks(i).then(res => {
+        for (let artObject of res.data.artObjects) {
+          this.artworks.push(artObject);
+        }
+      });
+    }
+    // deciding how many pages of sets to request
+    for (let i = 0; i < 10; i++) {
+      Sets.getSets(i).then(res => {
+        for (let set of res.data.userSets) {
+          this.sets.push(set);
+        }
+        for (let set of this.sets) {
+          Sets.getSetContents(set.id).then(res => {
+            if (res.data.userSet.count != 0) {
+              this.setsDetails.push(res.data.userSet);
+              this.setsContents.push({
+                id: res.data.userSet.id,
+                items: res.data.userSet.setItems
+              });
+            }
+          });
+        }
+      });
+    }
   }
 };
 </script>
