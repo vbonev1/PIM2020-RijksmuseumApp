@@ -115,7 +115,39 @@ export default {
       setsDetails: [],
       setsContents: [],
       showArtworkExplorer: false,
-      artworkToExplore: {}
+      artworkToExplore: {},
+      exampleComments: [
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "Adriana Lima",
+          avatarText: "AL",
+          avatarVariant: "info",
+          commentText:
+            "That's my favourite painting from Jan Asselijn! Actually, I've been interested in his works since...",
+          commentId: "1",
+          likes: 4,
+          dislikes: 0
+        },
+        {
+          author: "Jerry Kings",
+          avatarText: "JK",
+          avatarVariant: "success",
+          commentText:
+            "Beautiful!",
+          commentId: "2",
+          likes: 1,
+          dislikes: 0
+        }
+      ]
     };
   },
   computed: {
@@ -127,6 +159,7 @@ export default {
     artworkClicked() {
       this.showArtworkExplorer = true;
       this.artworkToExplore = this.artworks[this.artworksSwiper.activeIndex];
+      this.artworkToExplore.comments = this.exampleComments;
     }
   },
   mounted() {
