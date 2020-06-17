@@ -4,6 +4,7 @@ import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import store from './store';
  
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -14,8 +15,9 @@ Vue.config.productionTip = false
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
 Vue.use(VueAwesomeSwiper);
-Vue.use(VueAxios, axios)
+Vue.use(VueAxios, axios);
 
 new Vue({
+  store,
   render: h => h(App),
 }).$mount('#app')

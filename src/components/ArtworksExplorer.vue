@@ -20,7 +20,7 @@
             <b-img :style="windowWidth >= 768 ? 'width: 100%; height: 600px;' : 'width: 100%; height: 1200px;'" :src="artwork.webImage.url"></b-img>
           </b-col>
           <b-col xs="12" md="6">
-            <comments :comments="artwork.comments"></comments>
+            <comments :artwork="artwork"></comments>
           </b-col>
         </b-row>
       </b-container>

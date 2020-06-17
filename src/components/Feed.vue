@@ -25,7 +25,7 @@
     <artworksExplorer
       v-model="showArtworkExplorer"
       @close="showArtworkExplorer = false"
-      :artwork=" this.artworkToExplore"
+      :artwork="this.artworkToExplore"
     />
 
     <!-- Swiper holding sets from users -->
@@ -174,12 +174,12 @@ export default {
     }
   },
   mounted() {
-    console.log(this.artworksSwiper);
     this.artworksSwiper.autoplay.start();
     // deciding how many pages of artworks to request
     for (let i = 0; i < 1; i++) {
       Artworks.getArtworks(i).then(res => {
         for (let artObject of res.data.artObjects) {
+          artObject["commentsIds"] = [];
           this.artworks.push(artObject);
         }
       });
