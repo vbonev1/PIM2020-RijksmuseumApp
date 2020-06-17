@@ -246,7 +246,6 @@ export default {
   mounted() {
     console.log(this.artworksSwiper);
     this.artworksSwiper.autoplay.start();
-    this.artworksSwiper.autoplay.delay = 5000000;
     // deciding how many pages of artworks to request
     for (let i = 0; i < 1; i++) {
       Artworks.getArtworks(i).then(res => {

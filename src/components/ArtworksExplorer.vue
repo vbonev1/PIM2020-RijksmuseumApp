@@ -17,7 +17,7 @@
       <b-container fluid class="px-0">
         <b-row>
           <b-col xs="12" md="6">
-            <b-img style="width: 100%; max-height: 600px;" :src="artwork.webImage.url"></b-img>
+            <b-img :style="windowWidth >= 768 ? 'width: 100%; max-height: 600px;' : 'width: 100%; max-height: 1200px;'" :src="artwork.webImage.url"></b-img>
           </b-col>
           <b-col xs="12" md="6">
             <comments :comments="artwork.comments"></comments>
@@ -43,20 +43,19 @@ export default {
     value: Boolean,
     artwork: Object
   },
-  data() {
+    data() {
     return {
-      windowHeight: null,
-      widnowWidth: null
     };
   },
-  mounted() {
-    window.addEventListener('resize', () => {
-      this.windowHeight = window.innerHeight;
-      this.windowWidth = window.innerWidth;
-    })
-  },
   methods: {},
-  computed: {},
+  computed: {
+    windowWidth() {
+      return window.innerWidth;
+    },
+    windowHeight() {
+      return window.innerHeight;
+    }
+  },
   watch: {
     value(val) {
       if (!val) {

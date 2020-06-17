@@ -1,7 +1,7 @@
 <template>
-  <b-container fluid style="height: 600px;">
+  <b-container fluid :style="windowWidth >= 768 ? 'height: 600px;' : 'height: 1200px;'">
     <b-row style="height: 100%;">
-      <b-col cols="12" style="max-height: 400px; overflow: auto;">
+      <b-col cols="12" :style="windowWidth >= 768 ? 'max-height: 400px; overflow: auto;' : 'max-height: 800px; overflow: auto;'">
         <b-row>
           <b-card bg-variant="dark">
             <b-card bg-variant="dark" v-for="comment in comments" :key="comment.id">
@@ -64,6 +64,11 @@ export default {
     return {
       currentComment: ""
     };
+  },
+  computed: {
+    windowWidth() {
+      return window.innerWidth;
+    }
   },
   watch: {
     comments(val) {
