@@ -12,23 +12,22 @@
     v-model="value"
     @keydown.esc="$emit('close', false)"
   >
-    <b-card bg-variant="dark" height="100%">
+    <b-card :style="windowWidth >= 768 ? 'height: 700px;' : 'height: 1400px;'" bg-variant="dark">
       <!-- <v-icon @click="$emit('input', false);" large>mdi-close</v-icon> -->
       <b-container fluid class="px-0">
         <b-row>
-          <b-col style="height: 500px;" sm="6">
-            <b-img
-              style=" display: block; margin-left: auto; margin-right: auto;"
-              :src="artwork.webImage.url"
-              width="400px"
-            ></b-img>
+          <b-col xs="12" md="6">
+            <b-img style="width: 100%; max-height: 600px;" :src="artwork.webImage.url"></b-img>
           </b-col>
-          <b-col style="height: 500px;" sm="6">
-                <comments :comments="artwork.comments"></comments>
+          <b-col xs="12" md="6">
+            <comments :comments="artwork.comments"></comments>
           </b-col>
         </b-row>
       </b-container>
     </b-card>
+    <template v-slot:modal-footer>
+      <div style="display: none;" />
+    </template>
   </b-modal>
 </template>
 
@@ -45,9 +44,17 @@ export default {
     artwork: Object
   },
   data() {
-    return {};
+    return {
+      windowHeight: null,
+      widnowWidth: null
+    };
   },
-  mounted() {},
+  mounted() {
+    window.addEventListener('resize', () => {
+      this.windowHeight = window.innerHeight;
+      this.windowWidth = window.innerWidth;
+    })
+  },
   methods: {},
   computed: {},
   watch: {
@@ -55,7 +62,7 @@ export default {
       if (!val) {
         this.$emit("close", val);
       }
-    }
+    },
   }
 };
 </script>

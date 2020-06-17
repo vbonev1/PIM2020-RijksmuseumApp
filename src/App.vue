@@ -36,6 +36,7 @@ export default {
   min-height: 100%;
   position: relative;
   padding-bottom: 50px;
+  background-color: #242424;
 }
 #footer {
   position: absolute;

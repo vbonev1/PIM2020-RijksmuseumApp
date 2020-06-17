@@ -4,7 +4,7 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item href="#">
-          <b-img :src="require('@/assets/rijksmuseum-logo-combined.png')" width="300" height="50"></b-img>
+          <b-img :src="require('@/assets/rijkssocial-cropped.png')" width="250" height="50"></b-img>
         </b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">

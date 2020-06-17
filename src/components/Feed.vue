@@ -1,6 +1,12 @@
 <template>
   <div>
     <!-- Swiper holding artworks from the museum -->
+    <div
+      class="mt-5 ml-3"
+      style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; float: left;"
+    >
+      <h2 class="text-white">Popular artworks</h2>
+    </div>
     <div class="swiperWrapper">
       <swiper ref="artworksSwiper" class="swiper" :options="artworksSwiperOptions">
         <swiper-slide v-for="artwork in artworks" :key="artwork.id">
@@ -23,6 +29,12 @@
     />
 
     <!-- Swiper holding sets from users -->
+    <div
+      class="mt-5 mb-2 ml-3"
+      style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; float: left;"
+    >
+      <h2 class="text-white">Popular sets</h2>
+    </div>
     <div class="swiperWrapper">
       <swiper ref="popularSetsSwiper" class="swiper" :options="setsSwiperOptions">
         <swiper-slide v-for="content in setsContents" :key="content.id">
@@ -128,6 +140,76 @@ export default {
           dislikes: 0
         },
         {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
+          author: "John Smith",
+          avatarText: "JS",
+          avatarVariant: "primary",
+          commentText:
+            "Classic masterpiece! I remember the first time I saw it. I was with...",
+          commentId: "0",
+          likes: 3,
+          dislikes: 0
+        },
+        {
           author: "Adriana Lima",
           avatarText: "AL",
           avatarVariant: "info",
@@ -141,8 +223,7 @@ export default {
           author: "Jerry Kings",
           avatarText: "JK",
           avatarVariant: "success",
-          commentText:
-            "Beautiful!",
+          commentText: "Beautiful!",
           commentId: "2",
           likes: 1,
           dislikes: 0
@@ -163,6 +244,9 @@ export default {
     }
   },
   mounted() {
+    console.log(this.artworksSwiper);
+    this.artworksSwiper.autoplay.start();
+    this.artworksSwiper.autoplay.delay = 5000000;
     // deciding how many pages of artworks to request
     for (let i = 0; i < 1; i++) {
       Artworks.getArtworks(i).then(res => {
