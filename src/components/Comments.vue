@@ -7,41 +7,56 @@
       >
         <b-row align-h="center">
           <b-col cols="12" v-show="artwork.commentsIds.length != 0">
-              <b-card bg-variant="dark" v-for="commentId in artwork.commentsIds" :key="commentId">
-                <b-container fluid>
-                  <b-row>
-                    <b-col xs="12" md="2">
-                      <b-avatar
-                        :variant="comments[commentId].avatarVariant"
-                        :text="comments[commentId].avatarText"
-                      ></b-avatar>
-                    </b-col>
-                    <b-col xs="12" md="8">
-                      <p class="text-light">{{ comments[commentId].commentText }}</p>
-                    </b-col>
-                    <b-col xs="12" md="2">
-                      <div class="text-nowrap">
+            <b-card bg-variant="dark" v-for="commentId in artwork.commentsIds" :key="commentId">
+              <b-container fluid>
+                <b-row>
+                  <b-col xs="12" md="2">
+                    <b-avatar
+                      :variant="comments[commentId].avatarVariant"
+                      :text="comments[commentId].avatarText"
+                    ></b-avatar>
+                  </b-col>
+                  <b-col xs="12" md="7">
+                    <p class="text-light">{{ comments[commentId].commentText }}</p>
+                  </b-col>
+                  <b-col xs="12" md="3">
+                    <div class="text-nowrap">
+                      <b-button
+                        size="sm"
+                        :variant="variantLikeButton(commentId)"
+                        pill
+                        @click="likeComment(commentId)"
+                      >
                         <b-icon variant="light" icon="hand-thumbs-up" />
-                        <span class="text-white ml-1">{{ comments[commentId].likes}}</span>
-                        <b-icon class="ml-2" variant="light" icon="hand-thumbs-down" />
-                        <span class="text-white ml-1">{{ comments[commentId].dislikes }}</span>
-                      </div>
-                    </b-col>
-                  </b-row>
-                </b-container>
-              </b-card>
+                        <span class="text-white ml-1">{{ comments[commentId].likedBy.length}}</span>
+                      </b-button>
+                      <b-button
+                        class="ml-2"
+                        size="sm"
+                        :variant="variantDislikeButton(commentId)"
+                        pill
+                        @click="dislikeComment(commentId)"
+                      >
+                        <b-icon variant="light" icon="hand-thumbs-down" />
+                        <span class="text-white ml-1">{{ comments[commentId].dislikedBy.length }}</span>
+                      </b-button>
+                    </div>
+                  </b-col>
+                </b-row>
+              </b-container>
+            </b-card>
           </b-col>
-            <b-col cols="12" v-show="artwork.commentsIds.length == 0">
-              <b-card bg-variant="dark">
-                <b-container fluid>
-                  <b-row align-h="center">
-                    <b-col sm="10">
-                      <p class="text-light">There are no comments on this artwork yet</p>
-                    </b-col>
-                  </b-row>
-                </b-container>
-              </b-card>
-            </b-col>
+          <b-col cols="12" v-show="artwork.commentsIds.length == 0">
+            <b-card bg-variant="dark">
+              <b-container fluid>
+                <b-row align-h="center">
+                  <b-col sm="10">
+                    <p class="text-light">There are no comments on this artwork yet</p>
+                  </b-col>
+                </b-row>
+              </b-container>
+            </b-card>
+          </b-col>
         </b-row>
       </b-col>
       <b-col cols="12" align-self="end">
@@ -91,6 +106,9 @@ export default {
     },
     loggedUser() {
       return this.$store.getters.getLoggedUser;
+    },
+    users() {
+      return this.$store.getters.getUsers;
     }
   },
   methods: {
@@ -101,18 +119,73 @@ export default {
         avatarText: this.loggedUser.avatarText,
         avatarVariant: this.loggedUser.avatarVariant,
         commentText: this.currentComment,
-        likes: 0,
-        dislikes: 0
+        likedBy: [],
+        dislikedBy: []
       });
       this.$store.commit("updateLoggedUserComments", this.comments.length - 1);
       this.artwork.commentsIds.push(this.comments.length - 1);
+    },
+    likeComment(commentId) {
+      if (
+        this.comments[commentId].likedBy.includes(
+          this.users.indexOf(this.loggedUser)
+        )
+      ) {
+        let indexToRemove = this.comments[commentId].likedBy.indexOf(
+          this.users.indexOf(this.loggedUser)
+        );
+        this.comments[commentId].likedBy.splice(
+          indexToRemove,
+          1
+        );
+      } else {
+        this.comments[commentId].likedBy.push(
+          this.users.indexOf(this.loggedUser)
+        );
+      }
+    },
+    dislikeComment(commentId) {
+      if (
+        this.comments[commentId].dislikedBy.includes(
+          this.users.indexOf(this.loggedUser)
+        )
+      ) {
+        console.log('da go shtrakna pak moje li')
+        let indexToRemove = this.comments[commentId].dislikedBy.indexOf(
+          this.users.indexOf(this.loggedUser)
+        );
+        this.comments[commentId].dislikedBy.splice(
+          indexToRemove,
+          1
+        );
+      } else {
+        this.comments[commentId].dislikedBy.push(
+          this.users.indexOf(this.loggedUser)
+        );
+      }
+    },
+    variantLikeButton(commentId) {
+      if (
+        this.comments[commentId].likedBy.includes(
+          this.users.indexOf(this.loggedUser)
+        )
+      ) {
+        return "success";
+      }
+      return "outline-primary";
+    },
+    variantDislikeButton(commentId) {
+      if (
+        this.comments[commentId].dislikedBy.includes(
+          this.users.indexOf(this.loggedUser)
+        )
+      ) {
+        return "danger";
+      }
+      return "outline-primary";
     }
   },
-  watch: {
-    comments(val) {
-      console.log(val);
-    }
-  }
+  watch: {}
 };
 </script>
 <style scoped>

@@ -1,16 +1,5 @@
 export default {
-  comments: [
-    {
-      createdAt: "",
-      author: "John Smith",
-      avatarText: "JS",
-      avatarVariant: "primary",
-      commentText:
-        "Classic masterpiece! I remember the first time I saw it. I was with...",
-      likes: 3,
-      dislikes: 0
-    },
-  ],
+  comments: [],
   users: [
     {
       email: "example@mail.com", likedArtworks: [], likedSets: [], ownSets: [], following: [], followers: [], commentsIds: [],
