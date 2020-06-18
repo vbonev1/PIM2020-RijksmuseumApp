@@ -17,7 +17,14 @@
       <b-container fluid class="px-0">
         <b-row>
           <b-col xs="12" md="6">
-            <b-img :style="windowWidth >= 768 ? 'width: 100%; height: 600px;' : 'width: 100%; height: 1200px;'" :src="artwork.webImage.url"></b-img>
+            <b-img
+              :style="windowWidth >= 768 ? 'width: 100%; height: 600px;' : 'width: 100%; height: 1200px;'"
+              :src="artwork.webImage.url"
+            ></b-img>
+            <b-button class="mt-2" size="lg" variant="outline-danger" pill @click="invertArtworkLike()">
+              <b-icon v-show="likedByLoggedUser == false" variant="danger" icon="heart" />
+              <b-icon v-show="likedByLoggedUser" variant="danger" icon="heart-fill" />
+            </b-button>
           </b-col>
           <b-col xs="12" md="6">
             <comments :artwork="artwork"></comments>
@@ -43,17 +50,29 @@ export default {
     value: Boolean,
     artwork: Object
   },
-    data() {
-    return {
-    };
+  data() {
+    return {};
   },
-  methods: {},
+  methods: {
+    invertArtworkLike() {
+      this.$store.commit("updateLoggedUserLikedArtworks", this.artwork.id);
+    }
+  },
   computed: {
     windowWidth() {
       return window.innerWidth;
     },
     windowHeight() {
       return window.innerHeight;
+    },
+    loggedUser() {
+      return this.$store.getters.getLoggedUser;
+    },
+    likedByLoggedUser() {
+      if (this.loggedUser.likedArtworks.includes(this.artwork.id)) {
+        return true;
+      }
+      return false;
     }
   },
   watch: {
@@ -61,7 +80,7 @@ export default {
       if (!val) {
         this.$emit("close", val);
       }
-    },
+    }
   }
 };
 </script>

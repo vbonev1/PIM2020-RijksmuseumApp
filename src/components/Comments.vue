@@ -7,7 +7,7 @@
       >
         <b-row align-h="center">
           <b-col cols="12" v-show="artwork.commentsIds.length != 0">
-            <b-card bg-variant="dark" v-for="commentId in artwork.commentsIds" :key="commentId">
+            <b-card class="mt-2" bg-variant="dark" v-for="commentId in artwork.commentsIds" :key="commentId">
               <b-container fluid>
                 <b-row>
                   <b-col xs="12" md="2">
@@ -150,7 +150,6 @@ export default {
           this.users.indexOf(this.loggedUser)
         )
       ) {
-        console.log('da go shtrakna pak moje li')
         let indexToRemove = this.comments[commentId].dislikedBy.indexOf(
           this.users.indexOf(this.loggedUser)
         );
