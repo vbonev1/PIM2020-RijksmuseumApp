@@ -12,10 +12,10 @@
     title="Not logged in!"
   >
     <div class="d-block text-center">
-      <p>Please log in or register in order to like and comment on artworks and sets.</p>
+      <p>Please log in or sign up in order to like and comment on artworks and sets.</p>
     </div>
-    <b-button class="mt-3" variant="outline-success" block>Login</b-button>
-    <b-button class="mt-2" variant="outline-info" block>Register</b-button>
+    <b-button class="mt-3" variant="outline-success" block>Log in</b-button>
+    <b-button class="mt-2" variant="outline-info" block>Sign up</b-button>
   </b-modal>
 </template>
 <script>

@@ -16,10 +16,15 @@
           <b-dropdown-item href="#">Settings</b-dropdown-item>
           <b-dropdown-item href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-button v-else variant="outline-info" @click="login()">
-          Login
-          <b-icon icon="arrow-bar-right" aria-hidden="true"></b-icon>
-        </b-button>
+        <div v-else>
+          <b-button variant="outline-info" @click="login()">
+            Sign up
+          </b-button>
+          <b-button class="ml-2" variant="outline-success" @click="login()">
+            Login
+            <b-icon icon="arrow-bar-right" aria-hidden="true"></b-icon>
+          </b-button>
+        </div>
       </b-navbar-nav>
     </b-navbar>
   </div>
