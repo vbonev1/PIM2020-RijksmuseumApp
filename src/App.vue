@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import Toolbar from "./components/Toolbar.vue";
-import Feed from "./components/Feed.vue";
-import Footer from "./components/Footer.vue";
+import Toolbar from "./components/core/Toolbar.vue";
+import Feed from "./components/core/Feed.vue";
+import Footer from "./components/core/Footer.vue";
 import LoginAlert from "@/components/alerts/LoginAlert.vue";
 
 export default {

@@ -72,7 +72,7 @@ import Artworks from "@/services/Artworks.js";
 import Sets from "@/services/Sets.js";
 
 // custom components
-import ArtworksExplorer from "@/components/ArtworksExplorer.vue";
+import ArtworksExplorer from "@/components/explorers/ArtworksExplorer.vue";
 
 export default {
   components: {
