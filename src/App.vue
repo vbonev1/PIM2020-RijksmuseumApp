@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Toolbar />
+    <Toolbar v-show="$router.currentRoute.path != '/login' && $router.currentRoute.path != '/signup'" />
     <!--
      <div id='router-view'>
       <router-view/>
