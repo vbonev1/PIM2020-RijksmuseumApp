@@ -17,5 +17,5 @@ export default {
       avatarVariant: "primary"
     },
   ],
-  loggedUserId: 0,
+  loggedUserId: null,
 };

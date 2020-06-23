@@ -8,7 +8,7 @@
         </b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
-        <b-nav-item-dropdown right>
+        <b-nav-item-dropdown v-if="loggedUser" right>
           <template v-slot:text>
             <b-icon icon="person" />
           </template>
@@ -16,6 +16,10 @@
           <b-dropdown-item href="#">Settings</b-dropdown-item>
           <b-dropdown-item href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-button v-else variant="outline-info">
+          Login
+          <b-icon icon="arrow-bar-right" aria-hidden="true"></b-icon>
+        </b-button>
       </b-navbar-nav>
     </b-navbar>
   </div>
@@ -27,6 +31,14 @@ export default {
     value: 0,
     max: 100
   }),
+  computed: {
+    loggedUser() {
+      if (this.$store.getters.getLoggedUserId) {
+        return this.$store.getters.getLoggedUser;
+      }
+      return null;
+    }
+  },
   methods: {
     visualizeProgress() {
       this.value = 0;
