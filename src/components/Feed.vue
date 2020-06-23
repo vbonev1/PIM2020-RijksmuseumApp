@@ -24,7 +24,6 @@
 
     <artworksExplorer
       v-model="showArtworkExplorer"
-      @close="showArtworkExplorer = false"
       :artwork="this.artworkToExplore"
     />
 

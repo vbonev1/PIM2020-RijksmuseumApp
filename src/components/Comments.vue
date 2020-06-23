@@ -7,7 +7,12 @@
       >
         <b-row align-h="center">
           <b-col cols="12" v-show="artwork.commentsIds.length != 0">
-            <b-card class="mt-2" bg-variant="dark" v-for="commentId in artwork.commentsIds" :key="commentId">
+            <b-card
+              class="mt-2"
+              bg-variant="dark"
+              v-for="commentId in artwork.commentsIds"
+              :key="commentId"
+            >
               <b-container fluid>
                 <b-row>
                   <b-col xs="12" md="2">
@@ -113,17 +118,24 @@ export default {
   },
   methods: {
     postComment() {
-      this.$store.commit("updateComments", {
-        createdAt: new Date().toLocaleString(),
-        author: this.loggedUser.username,
-        avatarText: this.loggedUser.avatarText,
-        avatarVariant: this.loggedUser.avatarVariant,
-        commentText: this.currentComment,
-        likedBy: [],
-        dislikedBy: []
-      });
-      this.$store.commit("updateLoggedUserComments", this.comments.length - 1);
-      this.artwork.commentsIds.push(this.comments.length - 1);
+      if (this.loggedUser) {
+        this.$store.commit("updateComments", {
+          createdAt: new Date().toLocaleString(),
+          author: this.loggedUser.username,
+          avatarText: this.loggedUser.avatarText,
+          avatarVariant: this.loggedUser.avatarVariant,
+          commentText: this.currentComment,
+          likedBy: [],
+          dislikedBy: []
+        });
+        this.$store.commit(
+          "updateLoggedUserComments",
+          this.comments.length - 1
+        );
+        this.artwork.commentsIds.push(this.comments.length - 1);
+      } else {
+        this.$store.commit("updateLoginAlert", true);
+      }
     },
     likeComment(commentId) {
       if (
@@ -134,10 +146,7 @@ export default {
         let indexToRemove = this.comments[commentId].likedBy.indexOf(
           this.users.indexOf(this.loggedUser)
         );
-        this.comments[commentId].likedBy.splice(
-          indexToRemove,
-          1
-        );
+        this.comments[commentId].likedBy.splice(indexToRemove, 1);
       } else {
         this.comments[commentId].likedBy.push(
           this.users.indexOf(this.loggedUser)
@@ -153,10 +162,7 @@ export default {
         let indexToRemove = this.comments[commentId].dislikedBy.indexOf(
           this.users.indexOf(this.loggedUser)
         );
-        this.comments[commentId].dislikedBy.splice(
-          indexToRemove,
-          1
-        );
+        this.comments[commentId].dislikedBy.splice(indexToRemove, 1);
       } else {
         this.comments[commentId].dislikedBy.push(
           this.users.indexOf(this.loggedUser)

@@ -16,5 +16,8 @@ export default {
     if(!alreadyPresent) {
       state.users[state.loggedUserId].likedArtworks.push(payload);
     }
+  },
+  updateLoginAlert(state, payload) {
+    state.loginAlert = payload;
   }
 };

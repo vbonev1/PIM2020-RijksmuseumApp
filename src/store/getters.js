@@ -3,5 +3,6 @@ export default {
   getUsers: state => state.users,
   getLoggedUserId: state => state.loggedUserId,
   getLoggedUser: state => state.users[state.loggedUserId],
+  getLoginAlert: state => state.loginAlert
   };
   

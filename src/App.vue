@@ -7,6 +7,7 @@
     </div>
     -->
     <Feed />
+    <LoginAlert v-if="$store.getters.getLoginAlert" />
     <Footer id="footer" />
   </div>
 </template>
@@ -15,13 +16,15 @@
 import Toolbar from "./components/Toolbar.vue";
 import Feed from "./components/Feed.vue";
 import Footer from "./components/Footer.vue";
+import LoginAlert from "@/components/alerts/LoginAlert.vue";
 
 export default {
   name: "App",
   components: {
     Toolbar,
     Feed,
-    Footer
+    Footer,
+    LoginAlert
   },
 
 };

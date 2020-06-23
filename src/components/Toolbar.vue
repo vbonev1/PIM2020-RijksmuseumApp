@@ -16,7 +16,7 @@
           <b-dropdown-item href="#">Settings</b-dropdown-item>
           <b-dropdown-item href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
-        <b-button v-else variant="outline-info">
+        <b-button v-else variant="outline-info" @click="login()">
           Login
           <b-icon icon="arrow-bar-right" aria-hidden="true"></b-icon>
         </b-button>
@@ -46,6 +46,9 @@ export default {
       if (this.value == 100) {
         clearInterval(interval);
       }
+    },
+    login() {
+      // login functionality
     }
   },
   mounted() {
