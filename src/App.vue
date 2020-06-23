@@ -6,7 +6,7 @@
       <router-view/>
     </div>
     -->
-    <Feed />
+    <router-view />
     <LoginAlert v-if="$store.getters.getLoginAlert" />
     <Footer id="footer" />
   </div>
@@ -14,7 +14,6 @@
 
 <script>
 import Toolbar from "./components/core/Toolbar.vue";
-import Feed from "./components/core/Feed.vue";
 import Footer from "./components/core/Footer.vue";
 import LoginAlert from "@/components/alerts/LoginAlert.vue";
 
@@ -22,7 +21,6 @@ export default {
   name: "App",
   components: {
     Toolbar,
-    Feed,
     Footer,
     LoginAlert
   },

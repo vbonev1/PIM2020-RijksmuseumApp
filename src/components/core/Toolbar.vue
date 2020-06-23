@@ -17,10 +17,10 @@
           <b-dropdown-item href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
         <div v-else>
-          <b-button variant="outline-info" @click="login()">
+          <b-button variant="outline-info" @click="$router.push('/signup')">
             Sign up
           </b-button>
-          <b-button class="ml-2" variant="outline-success" @click="login()">
+          <b-button class="ml-2" variant="outline-success" @click="$router.push('/login')">
             Login
             <b-icon icon="arrow-bar-right" aria-hidden="true"></b-icon>
           </b-button>

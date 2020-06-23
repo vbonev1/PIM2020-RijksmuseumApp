@@ -14,8 +14,8 @@
     <div class="d-block text-center">
       <p>Please log in or sign up in order to like and comment on artworks and sets.</p>
     </div>
-    <b-button class="mt-3" variant="outline-success" block>Log in</b-button>
-    <b-button class="mt-2" variant="outline-info" block>Sign up</b-button>
+    <b-button class="mt-3" variant="outline-success" block @click="openLogin()">Log in</b-button>
+    <b-button class="mt-2" variant="outline-info" block @click="openSignup()">Sign up</b-button>
   </b-modal>
 </template>
 <script>
@@ -34,8 +34,13 @@ export default {
     }
   },
   methods: {
-    alertDismissed() {
+    openLogin() {
       this.$store.commit("updateLoginAlert", false);
+      this.$router.push("/login");
+    },
+    openSignup() {
+      this.$store.commit("updateLoginAlert", false);
+      this.$router.push("/signup");
     }
   },
   mounted() {
