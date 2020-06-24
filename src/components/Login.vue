@@ -13,7 +13,7 @@
             <template v-slot:header>
               <b-img :src="require('@/assets/rijkssocial-cropped.png')" width="250" height="50"></b-img>
             </template>
-            <b-form @submit="login()">
+            <b-form>
               <b-form-group id="input-group-1" label-for="input-1">
                 <b-form-input
                   id="input-1"
@@ -30,7 +30,7 @@
               <b-form-group id="input-group-2" label-for="input-2">
                 <b-form-input id="input-2" v-model="user.name" required placeholder="Enter name"></b-form-input>
               </b-form-group>
-              <b-button type="submit" variant="success">Log in</b-button>
+              <b-button type="submit" variant="success" @click="login()">Log in</b-button>
             </b-form>
           </b-card>
         </b-col>
@@ -52,8 +52,7 @@ export default {
     };
   },
   methods: {
-    login(evt) {
-      evt.preventDefault();
+    login() {
       for (let user of this.$store.getters.getUsers) {
         if (user.email == this.user.email) {
           this.emailInvalid = false;
@@ -61,6 +60,7 @@ export default {
             "updateLoggedUserId",
             this.$store.getters.getUsers.indexOf(user)
           );
+          this.$router.push("/");
         }
       }
       if (!this.$store.getters.getLoggedUserId) {

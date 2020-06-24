@@ -15,14 +15,12 @@
             >
               <b-container fluid>
                 <b-row>
-                  <b-col xs="12" md="2">
-                    <b-avatar
-                      :variant="comments[commentId].avatarVariant"
-                      :text="comments[commentId].avatarText"
-                    ></b-avatar>
+                  <b-col xs="12" md="12">
+                    <b-avatar :variant="comments[commentId].avatarVariant"></b-avatar>
+                   <span class="ml-2 text-light"> {{ comments[commentId].author }} </span>
                   </b-col>
-                  <b-col xs="12" md="7">
-                    <p class="text-light">{{ comments[commentId].commentText }}</p>
+                  <b-col xs="12" md="9">
+                    <p class="mt-2 text-light">{{ comments[commentId].commentText }}</p>
                   </b-col>
                   <b-col xs="12" md="3">
                     <div class="text-nowrap">
@@ -122,7 +120,6 @@ export default {
         this.$store.commit("updateComments", {
           createdAt: new Date().toLocaleString(),
           author: this.loggedUser.username,
-          avatarText: this.loggedUser.avatarText,
           avatarVariant: this.loggedUser.avatarVariant,
           commentText: this.currentComment,
           likedBy: [],

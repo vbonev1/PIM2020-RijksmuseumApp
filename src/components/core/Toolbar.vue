@@ -10,16 +10,15 @@
       <b-navbar-nav class="ml-auto">
         <b-nav-item-dropdown v-if="loggedUser" right>
           <template v-slot:text>
-            <b-icon icon="person" />
+            <b-avatar :variant="loggedUser.avatarVariant"></b-avatar>
+            <span class="ml-2 text-light">{{ loggedUser.username }}</span>
           </template>
           <b-dropdown-item href="#">Account</b-dropdown-item>
           <b-dropdown-item href="#">Settings</b-dropdown-item>
           <b-dropdown-item href="#">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
         <div v-else>
-          <b-button variant="outline-info" @click="$router.push('/signup')">
-            Sign up
-          </b-button>
+          <b-button variant="outline-info" @click="$router.push('/signup')">Sign up</b-button>
           <b-button class="ml-2" variant="outline-success" @click="$router.push('/login')">
             Login
             <b-icon icon="arrow-bar-right" aria-hidden="true"></b-icon>
