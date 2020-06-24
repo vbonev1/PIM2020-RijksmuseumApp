@@ -8,6 +8,7 @@
     -->
     <router-view />
     <LoginAlert v-if="$store.getters.getLoginAlert" />
+    <SignupSuccessfulAlert v-if="$store.getters.getSignupSuccessfulAlert" />
     <Footer id="footer" />
   </div>
 </template>
@@ -16,13 +17,15 @@
 import Toolbar from "./components/core/Toolbar.vue";
 import Footer from "./components/core/Footer.vue";
 import LoginAlert from "@/components/alerts/LoginAlert.vue";
+import SignupSuccessfulAlert from "@/components/alerts/SignupSuccessfulAlert.vue";
 
 export default {
   name: "App",
   components: {
     Toolbar,
     Footer,
-    LoginAlert
+    LoginAlert,
+    SignupSuccessfulAlert
   },
 
 };

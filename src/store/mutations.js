@@ -17,7 +17,16 @@ export default {
       state.users[state.loggedUserId].likedArtworks.push(payload);
     }
   },
+  updateUsers(state, payload) {
+    state.users.push(payload);
+  },
+  updateLoggedUserId(state, payload) {
+    state.loggedUserId = payload;
+  },
   updateLoginAlert(state, payload) {
     state.loginAlert = payload;
-  }
+  },
+  updateSignupSuccessfulAlert(state, payload) {
+    state.signupSuccessfulAlert = payload;
+  },
 };

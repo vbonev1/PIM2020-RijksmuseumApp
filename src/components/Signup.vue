@@ -14,30 +14,56 @@
               <b-img :src="require('@/assets/rijkssocial-cropped.png')" width="250" height="50"></b-img>
             </template>
             <b-form @submit="login()">
-              <b-form-group id="input-group-1" label-for="input-1">
-                <b-form-input
-                  id="input-1"
-                  v-model="user.email"
-                  type="email"
-                  required
-                  placeholder="Enter email"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-2" label-for="input-2">
-                <b-form-input
-                  id="input-2"
-                  v-model="user.username"
-                  type="email"
-                  required
-                  placeholder="Enter username"
-                ></b-form-input>
-              </b-form-group>
-
-              <b-form-group id="input-group-3" label-for="input-3">
-                <b-form-input id="input-3" v-model="user.name" required placeholder="Enter name"></b-form-input>
-              </b-form-group>
-              <b-button type="submit" variant="info">Sign up</b-button>
+              <b-container fluid>
+                <b-row>
+                  <b-col sm="6">
+                    <b-form-group id="input-group-1" label-for="input-1">
+                      <b-form-input
+                        id="input-1"
+                        v-model="user.email"
+                        type="email"
+                        required
+                        placeholder="email"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                  <b-col sm="6">
+                    <b-form-group id="input-group-2" label-for="input-2">
+                      <b-form-input
+                        id="input-2"
+                        v-model="user.username"
+                        required
+                        placeholder="username"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                  <b-col cols="12">
+                    <b-form-group id="input-group-3" label-for="input-3">
+                      <b-form-input
+                        id="input-3"
+                        v-model="user.personalDescription"
+                        placeholder="personal description"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                  <b-col cols="12">
+                     <b-form-group id="input-group-4" label-for="input-4">
+                    <b-form-select id="input-4" v-model="selectedAssessment" :options="personalAssessments"></b-form-select>
+                     </b-form-group>
+                  </b-col>
+                  <b-col cols="12">
+                    <b-form-group id="input-group-5" label-for="input-5">
+                      <b-form-input
+                        id="input-5"
+                        v-model="user.name"
+                        required
+                        placeholder="password"
+                      ></b-form-input>
+                    </b-form-group>
+                  </b-col>
+                </b-row>
+              </b-container>
+              <b-button type="submit" variant="info" @click="signup()">Sign up</b-button>
             </b-form>
           </b-card>
         </b-col>
@@ -53,15 +79,39 @@ export default {
       user: {
         email: "",
         username: "",
-        password: ""
+        password: "",
+        likedArtworks: [],
+        likedSets: [],
+        ownSets: [],
+        following: [],
+        followers: [],
+        commentsIds: [],
+        personalDescription: "",
+        avatarVariant: "primary"
       },
+      selectedAssessment: null,
+      personalAssessments: [
+        { value: null, text: "How much do you know about art?" },
+        { value: 0, text: "I am new to the world of art" },
+        {
+          value: 1,
+          text: "I have some minor experience with and knwoledge about art."
+        },
+        {
+          value: 2,
+          text:
+            "I have relativly large experience with and knowledge about art."
+        },
+        { value: 3, text: "When it comes to art, I am your guy!" }
+      ],
       show: true
     };
   },
   methods: {
-    login(evt) {
-      evt.preventDefault();
-      alert(JSON.stringify(this.user));
+    signup() {
+      this.$store.commit("updateUsers", this.user);
+      this.$store.commit("updateSignupSuccessfulAlert", true);
+      this.$router.push("/");
     }
   }
 };

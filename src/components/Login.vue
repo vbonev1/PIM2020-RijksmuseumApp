@@ -20,8 +20,11 @@
                   v-model="user.email"
                   type="email"
                   required
-                  placeholder="Enter email"
+                  placeholder="email"
                 ></b-form-input>
+                <b-form-invalid-feedback
+                  :force-show="emailInvalid"
+                >An account with the entered email doesn't exist.</b-form-invalid-feedback>
               </b-form-group>
 
               <b-form-group id="input-group-2" label-for="input-2">
@@ -40,6 +43,7 @@
 export default {
   data() {
     return {
+      emailInvalid: false,
       user: {
         email: "",
         password: ""
@@ -50,7 +54,18 @@ export default {
   methods: {
     login(evt) {
       evt.preventDefault();
-      alert(JSON.stringify(this.user));
+      for (let user of this.$store.getters.getUsers) {
+        if (user.email == this.user.email) {
+          this.emailInvalid = false;
+          this.$store.commit(
+            "updateLoggedUserId",
+            this.$store.getters.getUsers.indexOf(user)
+          );
+        }
+      }
+      if (!this.$store.getters.getLoggedUserId) {
+        this.emailInvalid = true;
+      }
     }
   }
 };
