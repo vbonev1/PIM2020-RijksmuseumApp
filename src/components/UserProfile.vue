@@ -14,13 +14,12 @@
             <h3 class="mt-3 text-light">{{ userViewed.personalDescription }}</h3>
             <h4
               class="mt-3 text-light"
-            >Personal assessment of art knowledge: {{ $store.getters.getPersonalAssessments[userViewed.personalAssessment] }}</h4>
+            >{{ $store.getters.getPersonalAssessments[userViewed.personalAssessment] }}</h4>
           </b-col>
         </b-card>
       </b-row>
     </b-container>
-
-    <!-- Swiper holding artworks from the museum -->
+    
     <div
       class="mt-5 ml-3"
       style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; float: left;"
@@ -28,12 +27,13 @@
       <h2 class="text-white">Artworks liked by {{ userViewed.username }}</h2>
     </div>
     <div class="swiperWrapper">
-      <swiper ref="likedArtworksSwiper" class="swiper" :options="artworksSwiperOptions">
+      <swiper v-if="likedArtworks.length > 0" ref="likedArtworksSwiper" class="swiper" :options="artworksSwiperOptions">
         <swiper-slide v-for="artwork in likedArtworks" :key="artwork.id">
           <b-img style="width: 300px; height: 300px;" :src="artwork.webImage.url"></b-img>
         </swiper-slide>
       </swiper>
-      <b-container class="mt-2">
+      <h3 v-else class="mt-5 text-white"> This user hasn't liked any artworks yet.</h3>
+      <b-container v-if="likedArtworks.length > 0" class="mt-2">
         <b-row class="text-center">
           <b-col>
             <b-button variant="dark" @click="likedArtworkClicked()">Explore and share your thoughts</b-button>
@@ -42,7 +42,6 @@
       </b-container>
     </div>
 
-    <!-- Swiper holding artworks from the museum -->
     <div
       class="mt-5 ml-3"
       style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; float: left;"
@@ -50,12 +49,13 @@
       <h2 class="text-white">Commented artworks by {{ userViewed.username }}</h2>
     </div>
     <div class="swiperWrapper">
-      <swiper ref="commentedArtworksSwiper" class="swiper" :options="artworksSwiperOptions">
+      <swiper v-if="commentedArtworks.length > 0" ref="commentedArtworksSwiper" class="swiper" :options="artworksSwiperOptions">
         <swiper-slide v-for="artwork in commentedArtworks" :key="artwork.id">
           <b-img style="width: 300px; height: 300px;" :src="artwork.webImage.url"></b-img>
         </swiper-slide>
       </swiper>
-      <b-container class="mt-2">
+      <h3 v-else class="mt-5 text-white"> This user hasn't commented on any artworks yet.</h3>
+      <b-container v-if="commentedArtworks.length" class="mt-2">
         <b-row class="text-center">
           <b-col>
             <b-button
@@ -68,7 +68,7 @@
     </div>
     <div style="height: 50px;"/>
 
-    <artworksExplorer v-model="showArtworkExplorer" :artwork="this.artworkToExplore" />
+    <artworksExplorer v-model="showArtworkExplorer" :artwork="this.artworkToExplore" @modalStateChanged="modalStateChanged" />
   </div>
 </template>
 
@@ -97,7 +97,8 @@ export default {
           el: ".swiper-pagination"
         }
       },
-      artworkToExplore: {}
+      artworkToExplore: {},
+      showArtworkExplorer: false
     };
   },
   computed: {
@@ -149,6 +150,9 @@ export default {
       this.artworkToExplore = this.commentedArtworks[
         this.commentedArtworksSwiper.activeIndex
       ];
+    },
+        modalStateChanged(val) {
+      this.showArtworkExplorer = val;
     }
   }
 };

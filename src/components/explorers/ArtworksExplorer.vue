@@ -94,13 +94,6 @@ export default {
       }
     }
   },
-  watch: {
-    modalOpen(val) {
-      if (!val) {
-        this.$emit("modalClosed");
-      }
-    }
-  }
 };
 </script>
 <style>
