@@ -7,13 +7,13 @@ export default {
   },
   updateLoggedUserLikedArtworks(state, payload) {
     let alreadyPresent = false;
-    for(let artworkId of state.users[state.loggedUserId].likedArtworks) {
-      if(artworkId == payload) {
+    for (let artworkId of state.users[state.loggedUserId].likedArtworks) {
+      if (artworkId == payload) {
         state.users[state.loggedUserId].likedArtworks.splice(state.users[state.loggedUserId].likedArtworks.indexOf(artworkId), 1);
         alreadyPresent = true;
       }
     }
-    if(!alreadyPresent) {
+    if (!alreadyPresent) {
       state.users[state.loggedUserId].likedArtworks.push(payload);
     }
   },
@@ -29,4 +29,26 @@ export default {
   updateSignupSuccessfulAlert(state, payload) {
     state.signupSuccessfulAlert = payload;
   },
+  updateArtworks(state, payload) {
+    state.artworks.push(payload);
+  },
+  updateSets(state, payload) {
+    state.sets.push(payload);
+  },
+  updateSetsContents(state, payload) {
+    state.setsContents.push({
+      id: payload.id,
+      items: payload.items
+    });
+  },
+  updateLoggedUserCommentedArtworks(state, payload) {
+    state.users[state.loggedUserId].commentedArtworks.push(payload);
+  },
+  updateArtworkComments(state, payload) {
+    for (let artwork of state.artworks) {
+      if (artwork.id == payload.artworkId) {
+        artwork.commentsIds.push(payload.commentId);
+      }
+    }
+  }
 };

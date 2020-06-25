@@ -10,7 +10,10 @@
     <div class="swiperWrapper">
       <swiper ref="artworksSwiper" class="swiper" :options="artworksSwiperOptions">
         <swiper-slide v-for="artwork in artworks" :key="artwork.id">
-          <b-img style="width: 300px; height: 300px;" :src="artwork.webImage.url"></b-img>
+          <b-img
+            style="width: 300px; height: 300px;"
+            :src="artwork.webImage ? artwork.webImage.url : require('@/assets/loading.jpg')"
+          ></b-img>
         </swiper-slide>
       </swiper>
       <b-container class="mt-2">
@@ -24,12 +27,13 @@
 
     <artworksExplorer
       v-model="showArtworkExplorer"
-      :artwork="this.artworkToExplore"
+      :artwork="artworkToExplore"
+      @modalStateChanged="modalStateChanged"
     />
 
     <!-- Swiper holding sets from users -->
     <div
-      class="mt-5 mb-2 ml-3"
+      class="mt-4 ml-3"
       style="font-family: 'Comic Sans MS', 'Comic Sans', cursive; float: left;"
     >
       <h2 class="text-white">Popular sets</h2>
@@ -41,13 +45,9 @@
             controls
             indicators
             background="#ababab"
-            style="width: 500px; height: 400px; text-shadow: 1px 1px 2px #333;"
+            style="text-shadow: 1px 1px 2px #333;"
           >
-            <b-carousel-slide
-              class="p-2"
-              v-for="artwork in content.items"
-              :key="artwork.id + '- from set'"
-            >
+            <b-carousel-slide class="p-2" v-for="artwork in content.items" :key="artwork.id">
               <template v-slot:img>
                 <img
                   class="d-block img-fluid w-100"
@@ -67,9 +67,6 @@
 // 3rd party swiper component
 import { Swiper, SwiperSlide } from "vue-awesome-swiper";
 
-// services for API consumption
-import Artworks from "@/services/Artworks.js";
-import Sets from "@/services/Sets.js";
 
 // custom components
 import ArtworksExplorer from "@/components/explorers/ArtworksExplorer.vue";
@@ -99,8 +96,8 @@ export default {
         }
       },
       setsSwiperOptions: {
-        slidesPerView: 4,
-        spaceBetween: 40,
+        slidesPerView: 1,
+        spaceBetween: 10,
         direction: "horizontal",
         navigation: {
           nextEl: ".swiper-button-next",
@@ -111,95 +108,50 @@ export default {
             slidesPerView: 3,
             spaceBetween: 30
           },
-          768: {
+          640: {
             slidesPerView: 2,
             spaceBetween: 20
-          },
-          640: {
-            slidesPerView: 1,
-            spaceBetween: 10
           }
         }
       },
-      artworks: [],
-      sets: [],
-      setsDetails: [],
-      setsContents: [],
       showArtworkExplorer: false,
-      artworkToExplore: {},
-      exampleComments: [
-        {
-          author: "John Smith",
-          avatarText: "JS",
-          avatarVariant: "primary",
-          commentText:
-            "Classic masterpiece! I remember the first time I saw it. I was with...",
-          commentId: "0",
-          likes: 3,
-          dislikes: 0
-        },
-        {
-          author: "Adriana Lima",
-          avatarText: "AL",
-          avatarVariant: "info",
-          commentText:
-            "That's my favourite painting from Jan Asselijn! Actually, I've been interested in his works since...",
-          commentId: "1",
-          likes: 4,
-          dislikes: 0
-        },
-        {
-          author: "Jerry Kings",
-          avatarText: "JK",
-          avatarVariant: "success",
-          commentText: "Beautiful!",
-          commentId: "2",
-          likes: 1,
-          dislikes: 0
-        }
-      ]
+      artworkToExplore: {}
     };
   },
   computed: {
     artworksSwiper() {
       return this.$refs.artworksSwiper.$swiper;
+    },
+    artworks() {
+      return this.$store.getters.getArtworks;
+    },
+    sets() {
+      return this.$store.getters.getSets;
+    },
+    setsContents() {
+      console.log(this.$store.getters.getSetsContents)
+      return this.$store.getters.getSetsContents;
     }
   },
   methods: {
     artworkClicked() {
       this.showArtworkExplorer = true;
       this.artworkToExplore = this.artworks[this.artworksSwiper.activeIndex];
-      this.artworkToExplore.comments = this.exampleComments;
+    },
+    setInSets(passedSet) {
+      for (let set of this.sets) {
+        if (set.id == passedSet.id) {
+          return true;
+        }
+      }
+      return false;
+    },
+    modalStateChanged(val) {
+      this.showArtworkExplorer = val;
     }
   },
   mounted() {
     this.artworksSwiper.autoplay.start();
-    // deciding how many pages of artworks to request
-    for (let i = 0; i < 1; i++) {
-      Artworks.getArtworks(i).then(res => {
-        for (let artObject of res.data.artObjects) {
-          artObject["commentsIds"] = [];
-          this.artworks.push(artObject);
-        }
-      });
-    }
-    // deciding how many pages of sets to request
-    for (let i = 0; i < 10; i++) {
-      Sets.getSets(i).then(res => {
-        this.sets = this.sets.concat(res.data.userSets);
-        for (let set of res.data.userSets) {
-          Sets.getSetContents(set.id).then(res => {
-            if (res.data.userSet.count != 0) {
-              this.setsDetails.push(res.data.userSet);
-              this.setsContents.push({
-                id: res.data.userSet.id,
-                items: res.data.userSet.setItems
-              });
-            }
-          });
-        }
-      });
-    }
   },
   watch: {}
 };

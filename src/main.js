@@ -27,7 +27,7 @@ const routes = [
   {path: "/", component: Feed},
   {path: "/login", component: Login},
   {path: "/signup", component: Signup},
-  {path: "/profile", component: UserProfile},
+  {path: "/user-profile/:userId", component: UserProfile},
 ];
 
 const router = new VueRouter({

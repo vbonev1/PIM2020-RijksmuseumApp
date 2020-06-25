@@ -13,7 +13,7 @@
             <template v-slot:header>
               <b-img :src="require('@/assets/rijkssocial-cropped.png')" width="250" height="50"></b-img>
             </template>
-            <b-form @submit="login()">
+            <b-form>
               <b-container fluid>
                 <b-row>
                   <b-col sm="6">
@@ -48,7 +48,7 @@
                   </b-col>
                   <b-col cols="12">
                      <b-form-group id="input-group-4" label-for="input-4">
-                    <b-form-select id="input-4" v-model="selectedAssessment" :options="personalAssessments"></b-form-select>
+                    <b-form-select id="input-4" v-model="user.personalAssessment" :options="personalAssessments"></b-form-select>
                      </b-form-group>
                   </b-col>
                   <b-col cols="12">
@@ -63,7 +63,7 @@
                   </b-col>
                 </b-row>
               </b-container>
-              <b-button type="submit" variant="info" @click="signup()">Sign up</b-button>
+              <b-button variant="info" @click="signup()">Sign up</b-button>
             </b-form>
           </b-card>
         </b-col>
@@ -81,15 +81,15 @@ export default {
         username: "",
         password: "",
         likedArtworks: [],
+        commentedArtworks: [],
         likedSets: [],
-        ownSets: [],
         following: [],
         followers: [],
         commentsIds: [],
         personalDescription: "",
+        personalAssessment: null,
         avatarVariant: "primary"
       },
-      selectedAssessment: null,
       personalAssessments: [
         { value: null, text: "How much do you know about art?" },
         { value: 0, text: "I am new to the world of art" },

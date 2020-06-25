@@ -13,9 +13,8 @@
             <b-avatar :variant="loggedUser.avatarVariant"></b-avatar>
             <span class="ml-2 text-light">{{ loggedUser.username }}</span>
           </template>
-          <b-dropdown-item href="#">Account</b-dropdown-item>
-          <b-dropdown-item href="#">Settings</b-dropdown-item>
-          <b-dropdown-item href="#">Logout</b-dropdown-item>
+          <b-dropdown-item @click="openLoggedUserProfile">Account</b-dropdown-item>
+          <b-dropdown-item @click="logout">Logout</b-dropdown-item>
         </b-nav-item-dropdown>
         <div v-else>
           <b-button variant="outline-info" @click="$router.push('/signup')">Sign up</b-button>
@@ -37,7 +36,7 @@ export default {
   }),
   computed: {
     loggedUser() {
-      if (this.$store.getters.getLoggedUserId) {
+      if (this.$store.getters.getLoggedUserId != null) {
         return this.$store.getters.getLoggedUser;
       }
       return null;
@@ -53,6 +52,13 @@ export default {
     },
     login() {
       // login functionality
+    },
+    logout() {
+      //this.$router.push("/");
+      this.$store.commit("updateLoggedUserId", null);
+    },
+    openLoggedUserProfile() {
+      this.$router.push("user-profile/" + this.$store.getters.getLoggedUserId);
     }
   },
   mounted() {

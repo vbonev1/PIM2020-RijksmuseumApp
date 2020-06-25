@@ -6,18 +6,24 @@
         :style="windowWidth >= 768 ? 'max-height: 400px; overflow: auto;' : 'max-height: 800px; overflow: auto;'"
       >
         <b-row align-h="center">
-          <b-col cols="12" v-show="artwork.commentsIds.length != 0">
+          <b-col cols="12" v-show="$store.getters.getArtworkById(artwork.id).commentsIds.length != 0">
             <b-card
               class="mt-2"
               bg-variant="dark"
-              v-for="commentId in artwork.commentsIds"
+              v-for="commentId in $store.getters.getArtworkById(artwork.id).commentsIds"
               :key="commentId"
             >
               <b-container fluid>
                 <b-row>
-                  <b-col xs="12" md="12">
-                    <b-avatar :variant="comments[commentId].avatarVariant"></b-avatar>
-                   <span class="ml-2 text-light"> {{ comments[commentId].author }} </span>
+                  <b-col md="12" class="pl-0">
+                    <b-btn
+                      size="sm"
+                      variant="link"
+                      @click="openUserProfile(comments[commentId].author)"
+                    >
+                      <b-avatar :variant="comments[commentId].avatarVariant"></b-avatar>
+                      <span class="ml-2 text-light">{{ comments[commentId].author }}</span>
+                    </b-btn>
                   </b-col>
                   <b-col xs="12" md="9">
                     <p class="mt-2 text-light">{{ comments[commentId].commentText }}</p>
@@ -49,7 +55,7 @@
               </b-container>
             </b-card>
           </b-col>
-          <b-col cols="12" v-show="artwork.commentsIds.length == 0">
+          <b-col cols="12" v-show="$store.getters.getArtworkById(artwork.id).commentsIds.length == 0">
             <b-card bg-variant="dark">
               <b-container fluid>
                 <b-row align-h="center">
@@ -129,7 +135,8 @@ export default {
           "updateLoggedUserComments",
           this.comments.length - 1
         );
-        this.artwork.commentsIds.push(this.comments.length - 1);
+        this.$store.commit("updateLoggedUserCommentedArtworks", this.artwork.id);
+        this.$store.commit("updateArtworkComments", { artworkId: this.artwork.id, commentId: this.comments.length-1});
       } else {
         this.$store.commit("updateLoginAlert", true);
       }
@@ -185,6 +192,13 @@ export default {
         return "danger";
       }
       return "outline-primary";
+    },
+    openUserProfile(username) {
+      for (let user of this.users) {
+        if (user.username == username) {
+          this.$router.push("user-profile/" + this.users.indexOf(user));
+        }
+      }
     }
   },
   watch: {}

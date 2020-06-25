@@ -1,23 +1,15 @@
 export default {
   comments: [],
-  users: [
-    {
-      email: "example@mail.com", likedArtworks: [], likedSets: [], ownSets: [], following: [], followers: [], commentsIds: [],
-      personalDescription: "", username: "example0",
-      avatarVariant: "primary"
-    },
-    {
-      email: "example1@mail.com", likedArtworks: [], likedSets: [], ownSets: [], following: [], followers: [], commentsIds: [],
-      personalDescription: "", username: "example1",
-      avatarVariant: "primary"
-    },
-    {
-      email: "example2@mail.com", likedArtworks: [], likedSets: [], ownSets: [], following: [], followers: [], commentsIds: [],
-      personalDescription: "", username: "example2",
-      avatarVariant: "primary"
-    },
-  ],
+  users: [],
   loggedUserId: null,
   loginAlert: false,
   signupSuccessfulAlert: false,
+  personalAssessments:
+    ["I am new to the world of art",
+      "I have some minor experience with and knwoledge about art.",
+      "I have relativly large experience with and knowledge about art.",
+      "When it comes to art, I am your guy!"],
+  artworks: [],
+  sets: [],
+  setsContents: [],
 };

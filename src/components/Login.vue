@@ -28,9 +28,9 @@
               </b-form-group>
 
               <b-form-group id="input-group-2" label-for="input-2">
-                <b-form-input id="input-2" v-model="user.name" required placeholder="Enter name"></b-form-input>
+                <b-form-input id="input-2" v-model="user.password" required placeholder="password"></b-form-input>
               </b-form-group>
-              <b-button type="submit" variant="success" @click="login()">Log in</b-button>
+              <b-button variant="success" @click="login()">Log in</b-button>
             </b-form>
           </b-card>
         </b-col>
@@ -56,6 +56,7 @@ export default {
       for (let user of this.$store.getters.getUsers) {
         if (user.email == this.user.email) {
           this.emailInvalid = false;
+          console.log("updating logged user id to: ", this.$store.getters.getUsers.indexOf(user));
           this.$store.commit(
             "updateLoggedUserId",
             this.$store.getters.getUsers.indexOf(user)

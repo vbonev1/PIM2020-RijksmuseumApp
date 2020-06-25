@@ -10,7 +10,7 @@
       centered
       size="xl"
       :title="artwork.longTitle"
-      v-model="value"
+      v-model="modalOpen"
     >
       <b-card :style="windowWidth >= 768 ? 'height: 700px;' : 'height: 1400px;'" bg-variant="dark">
         <!-- <v-icon @click="$emit('input', false);" large>mdi-close</v-icon> -->
@@ -19,7 +19,7 @@
             <b-col xs="12" md="6">
               <b-img
                 :style="windowWidth >= 768 ? 'width: 100%; height: 600px;' : 'width: 100%; height: 1200px;'"
-                :src="artwork.webImage.url"
+                :src="artwork.webImage ? artwork.webImage.url : require('@/assets/loading.jpg')"
               ></b-img>
               <b-button
                 class="mt-2"
@@ -70,9 +70,6 @@ export default {
     windowWidth() {
       return window.innerWidth;
     },
-    windowHeight() {
-      return window.innerHeight;
-    },
     loggedUser() {
       return this.$store.getters.getLoggedUser;
     },
@@ -87,12 +84,20 @@ export default {
         return true;
       }
       return false;
+    },
+    modalOpen: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("modalStateChanged", val);
+      }
     }
   },
   watch: {
-    value(val) {
+    modalOpen(val) {
       if (!val) {
-        this.$emit("close", val);
+        this.$emit("modalClosed");
       }
     }
   }
