@@ -23,7 +23,7 @@
               ></b-img>
               <b-button
                 class="mt-2"
-                size="lg"
+                size="md"
                 variant="outline-danger"
                 pill
                 @click="invertArtworkLike()"
@@ -31,6 +31,7 @@
                 <b-icon v-show="likedByLoggedUser == false" variant="danger" icon="heart" />
                 <b-icon v-show="likedByLoggedUser" variant="danger" icon="heart-fill" />
               </b-button>
+              <span class="ml-2 text-white" style="font-size: 30px; vertical-align: middle;">{{ artwork.likes }}</span>
             </b-col>
             <b-col xs="12" md="6">
               <comments :artwork="artwork"></comments>
@@ -61,6 +62,7 @@ export default {
     invertArtworkLike() {
       if (this.loggedUser) {
         this.$store.commit("updateLoggedUserLikedArtworks", this.artwork.id);
+        this.$store.commit("updateArtworkLikes", this.artwork.id);
       } else {
         this.$store.commit("updateLoginAlert", true);
       }
@@ -93,7 +95,7 @@ export default {
         this.$emit("modalStateChanged", val);
       }
     }
-  },
+  }
 };
 </script>
 <style>

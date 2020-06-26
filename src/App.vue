@@ -63,6 +63,7 @@ export default {
       Artworks.getArtworks(i).then(res => {
         for (let artObject of res.data.artObjects) {
           artObject["commentsIds"] = [];
+          artObject["likes"] = 0;
           this.$store.commit("updateArtworks", artObject);
         }
       });

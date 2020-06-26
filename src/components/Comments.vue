@@ -137,6 +137,8 @@ export default {
         );
         this.$store.commit("updateLoggedUserCommentedArtworks", this.artwork.id);
         this.$store.commit("updateArtworkComments", { artworkId: this.artwork.id, commentId: this.comments.length-1});
+        // clear currentComemnt
+        this.currentComment = "";
       } else {
         this.$store.commit("updateLoginAlert", true);
       }

@@ -58,5 +58,25 @@ export default {
         artwork.commentsIds.push(payload.commentId);
       }
     }
+  },
+  updateArtworkLikes(state, payload) {
+    let unliked = true;
+    for (let artworkId of state.users[state.loggedUserId].likedArtworks) {
+      if (artworkId == payload) {
+        unliked = false;
+        for(let artwork of state.artworks) {
+          if(artwork.id == payload) {
+            artwork.likes++;
+          }
+        }
+      }
+    }
+    if(unliked) {
+      for(let artwork of state.artworks) {
+        if(artwork.id == payload) {
+          artwork.likes--;
+        }
+      }
+    }
   }
 };
