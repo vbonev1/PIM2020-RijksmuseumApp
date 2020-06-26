@@ -19,6 +19,14 @@ export default {
   },
   updateUsers(state, payload) {
     state.users.push(payload);
+    window.localStorage.setItem("users", JSON.stringify(state.users));
+
+  },
+  reassignUsers(state, payload){
+    if (payload != null) {
+    state.users = payload;
+    }
+    window.localStorage.setItem("users", JSON.stringify(state.users));
   },
   updateLoggedUserId(state, payload) {
     state.loggedUserId = payload;

@@ -4,7 +4,7 @@
     <b-navbar type="dark" variant="dark">
       <b-navbar-nav>
         <b-nav-item href="#">
-          <b-img :src="require('@/assets/rijkssocial-cropped.png')" width="250" height="50"></b-img>
+          <b-img :src="require('@/assets/rijkssocial-cropped.png')" width="250" height="50" @click="$router.push('/')"></b-img>
         </b-nav-item>
       </b-navbar-nav>
       <b-navbar-nav class="ml-auto">
@@ -54,11 +54,11 @@ export default {
       // login functionality
     },
     logout() {
-      //this.$router.push("/");
+      this.$router.push("/");
       this.$store.commit("updateLoggedUserId", null);
     },
     openLoggedUserProfile() {
-      this.$router.push("user-profile/" + this.$store.getters.getLoggedUserId);
+      this.$router.push("/user-profile/" + this.$store.getters.getLoggedUserId);
     }
   },
   mounted() {

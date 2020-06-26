@@ -129,7 +129,6 @@ export default {
       return this.$store.getters.getSets;
     },
     setsContents() {
-      console.log(this.$store.getters.getSetsContents)
       return this.$store.getters.getSetsContents;
     }
   },

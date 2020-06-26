@@ -54,6 +54,10 @@ export default {
     }
   },
   mounted() {
+    this.$store.commit(
+      "reassignUsers",
+      JSON.parse(window.localStorage.getItem("users"))
+    );
     // deciding how many pages of artworks to request
     for (let i = 0; i < 1; i++) {
       Artworks.getArtworks(i).then(res => {
