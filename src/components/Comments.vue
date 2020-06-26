@@ -198,7 +198,7 @@ export default {
     openUserProfile(username) {
       for (let user of this.users) {
         if (user.username == username) {
-          this.$router.push("user-profile/" + this.users.indexOf(user));
+          this.$router.push("/user-profile/" + this.users.indexOf(user));
         }
       }
     }
