@@ -1,9 +1,9 @@
 <template>
-  <b-container fluid :style="windowWidth >= 768 ? 'height: 600px;' : 'height: 1200px;'">
+  <b-container fluid :style="windowWidth >= 768 ? 'height: 500px;' : 'height: 1000px;'">
     <b-row style="height: 100%;">
       <b-col
         cols="12"
-        :style="windowWidth >= 768 ? 'max-height: 400px; overflow: auto;' : 'max-height: 800px; overflow: auto;'"
+        :style="windowWidth >= 768 ? 'max-height: 300px; overflow: auto;' : 'max-height: 700px; overflow: auto;'"
       >
         <b-row align-h="center">
           <b-col cols="12" v-show="$store.getters.getArtworkById(artwork.id).commentsIds.length != 0">

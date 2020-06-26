@@ -12,13 +12,13 @@
       :title="artwork.longTitle"
       v-model="modalOpen"
     >
-      <b-card :style="windowWidth >= 768 ? 'height: 700px;' : 'height: 1400px;'" bg-variant="dark">
+      <b-card :style="windowWidth >= 768 ? 'height: 600px;' : 'height: 1200px;'" bg-variant="dark">
         <!-- <v-icon @click="$emit('input', false);" large>mdi-close</v-icon> -->
         <b-container fluid class="px-0">
           <b-row>
             <b-col xs="12" md="6">
               <b-img
-                :style="windowWidth >= 768 ? 'width: 100%; height: 600px;' : 'width: 100%; height: 1200px;'"
+                :style="windowWidth >= 768 ? 'width: 100%; height: 500px;' : 'width: 100%; height: 1000px;'"
                 :src="artwork.webImage ? artwork.webImage.url : require('@/assets/loading.jpg')"
               ></b-img>
               <b-button

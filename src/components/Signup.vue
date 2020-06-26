@@ -25,6 +25,7 @@
                         required
                         placeholder="email"
                       ></b-form-input>
+                      <b-form-invalid-feedback :force-show="emailEmpty">Email is required.</b-form-invalid-feedback>
                     </b-form-group>
                   </b-col>
                   <b-col sm="6">
@@ -35,6 +36,7 @@
                         required
                         placeholder="username"
                       ></b-form-input>
+                      <b-form-invalid-feedback :force-show="usernameEmpty">Username is required.</b-form-invalid-feedback>
                     </b-form-group>
                   </b-col>
                   <b-col cols="12">
@@ -47,9 +49,13 @@
                     </b-form-group>
                   </b-col>
                   <b-col cols="12">
-                     <b-form-group id="input-group-4" label-for="input-4">
-                    <b-form-select id="input-4" v-model="user.personalAssessment" :options="personalAssessments"></b-form-select>
-                     </b-form-group>
+                    <b-form-group id="input-group-4" label-for="input-4">
+                      <b-form-select
+                        id="input-4"
+                        v-model="user.personalAssessment"
+                        :options="personalAssessments"
+                      ></b-form-select>
+                    </b-form-group>
                   </b-col>
                   <b-col cols="12">
                     <b-form-group id="input-group-5" label-for="input-5">
@@ -90,6 +96,8 @@ export default {
         personalAssessment: null,
         avatarVariant: "primary"
       },
+      emailEmpty: false,
+      usernameEmpty: false,
       personalAssessments: [
         { value: null, text: "How much do you know about art?" },
         { value: 0, text: "I am new to the world of art" },
@@ -109,9 +117,21 @@ export default {
   },
   methods: {
     signup() {
-      this.$store.commit("updateUsers", this.user);
-      this.$store.commit("updateSignupSuccessfulAlert", true);
-      this.$router.push("/");
+      if (this.user.email == "") {
+        this.emailEmpty = true;
+      } else {
+        this.emailEmpty = false;
+      }
+      if (this.user.username == "") {
+        this.usernameEmpty = true;
+      } else {
+        this.usernameEmpty = false;
+      }
+      if (!this.emailEmpty && !this.usernameEmpty) {
+        this.$store.commit("updateUsers", this.user);
+        this.$store.commit("updateSignupSuccessfulAlert", true);
+        this.$router.push("/");
+      }
     }
   }
 };

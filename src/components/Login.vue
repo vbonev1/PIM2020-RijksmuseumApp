@@ -54,9 +54,8 @@ export default {
   methods: {
     login() {
       for (let user of this.$store.getters.getUsers) {
-        if (user.email == this.user.email) {
+        if (user.email != "" && user.email == this.user.email) {
           this.emailInvalid = false;
-          console.log("updating logged user id to: ", this.$store.getters.getUsers.indexOf(user));
           this.$store.commit(
             "updateLoggedUserId",
             this.$store.getters.getUsers.indexOf(user)
